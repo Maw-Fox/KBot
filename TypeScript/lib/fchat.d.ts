@@ -10,7 +10,7 @@ interface FHTMLElement extends JQuery {
 }
 
 interface ChannelObject {
-    tab: JQuery;
+    tab: FHTMLElement;
     closed: boolean;
 }
 
