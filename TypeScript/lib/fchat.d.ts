@@ -40,7 +40,7 @@ interface Chat {
 
     // Methods
     printMessage(args: {
-        message: string;
+        msg: string;
         to: ChannelObject;
         from: string;
         type: string;
