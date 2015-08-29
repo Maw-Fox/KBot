@@ -39,7 +39,7 @@ module FList {
                 });
 
                 Chat.printMessage({
-                    msg: message,
+                    message: message,
                     to: Chat.TabBar.getTabFromId('channel', args.channel),
                     from: character,
                     type: type
@@ -88,7 +88,7 @@ module FList {
                     });
 
                     Chat.printMessage({
-                        msg: message,
+                        message: message,
                         to: tabObject,
                         from: character,
                         type: type
