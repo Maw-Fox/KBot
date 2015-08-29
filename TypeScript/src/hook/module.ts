@@ -9,14 +9,14 @@
 module FList {
     module Chat {
         module commands {
-            import Chat = FList.Chat;
+            import Local = FList.Chat;
 
             export function MSG(args: ArgsMSG): void {
                 var character = args.character;
                 var message = args.message;
                 var type = "chat";
 
-                if (Chat.ignoreList.indexOf(character.toLowerCase()) !== -1) {
+                if (Local.ignoreList.indexOf(character.toLowerCase()) !== -1) {
                     return;
                 }
 
@@ -26,21 +26,21 @@ module FList {
                         .replace(/\[\/icon\]/g, '[/user]');
                 }
 
-                if (Chat.Roleplay.isRoleplay(message)) {
+                if (Local.Roleplay.isRoleplay(message)) {
                     message = message.substr(3);
                     type = 'rp';
                 }
 
                 KBot.read({
                     msg: message,
-                    to: Chat.TabBar.getTabFromId('channel', args.channel),
+                    to: Local.TabBar.getTabFromId('channel', args.channel),
                     from: character,
                     type: type
                 });
 
-                Chat.printMessage({
+                Local.printMessage({
                     msg: message,
-                    to: Chat.TabBar.getTabFromId('channel', args.channel),
+                    to: Local.TabBar.getTabFromId('channel', args.channel),
                     from: character,
                     type: type
                 });
@@ -50,10 +50,10 @@ module FList {
             export function PRI(args: ArgsPRI): void {
                 var character = args.character;
                 var characterSafe = character.toLowerCase();
-                var isIgnored = Chat.ignoreList.indexOf(characterSafe) !== -1;
+                var isIgnored = Local.ignoreList.indexOf(characterSafe) !== -1;
                 var message = args.message;
                 var type = 'chat';
-                var tabObject = Chat.TabBar.getTabFromId('user', character);
+                var tabObject = Local.TabBar.getTabFromId('user', character);
 
                 if (isIgnored) {
                     Connection.send('IGN' + JSON.stringify({
@@ -63,13 +63,13 @@ module FList {
                     return;
                 }
 
-                if (Chat.Roleplay.isRoleplay(message)) {
+                if (Local.Roleplay.isRoleplay(message)) {
                     message = message.substr(3);
                     type = 'rp';
                 }
 
                 if (!tabObject) {
-                    Chat.openPrivateChat(characterSafe);
+                    Local.openPrivateChat(characterSafe);
                 } else {
                     tabObject.tab
                         .children('.tpn')
@@ -81,13 +81,13 @@ module FList {
                         tabObject.closed = false;
                     }
 
-                    Chat.Logs.saveLogs(character, {
+                    Local.Logs.saveLogs(character, {
                         msg: message,
                         kind: type,
                         to: characterSafe
                     });
 
-                    Chat.printMessage({
+                    Local.printMessage({
                         msg: message,
                         to: tabObject,
                         from: character,
