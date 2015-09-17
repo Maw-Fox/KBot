@@ -30,9 +30,9 @@ module Flist.Chat.Commands {
         }
 
         KBot.read({
-            msg: message,
-            to: Local.TabBar.getTabFromId('channel', args.channel),
-            from: character,
+            message: message,
+            channel: Local.TabBar.getTabFromId('channel', args.channel),
+            name: character,
             type: type
         });
 
@@ -93,9 +93,9 @@ module Flist.Chat.Commands {
             });
 
             KBot.read({
-                msg: message,
-                to: tabObject,
-                from: character,
+                message: message,
+                channel: tabObject,
+                name: character,
                 type: type
             });
             return;

@@ -4,6 +4,6 @@
  */
 
 /// <reference path="../lib/fchat.d.ts" />
-/// <reference path="commands/module.ts" />
 /// <reference path="handler/module.ts" />
+/// <reference path="commands/module.ts" />
 /// <reference path="hook/module.ts" />

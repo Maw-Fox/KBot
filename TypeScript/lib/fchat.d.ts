@@ -10,6 +10,9 @@ interface FHTMLElement extends JQuery {
 }
 
 interface ChannelObject {
+    id: string;
+    title: string;
+    type: string;
     tab: FHTMLElement;
     closed: boolean;
 }
@@ -37,6 +40,7 @@ interface Logs {
 interface Chat {
     // Properties
     ignoreList: string[];
+    identity: string;
 
     // Methods
     printMessage(args: {
