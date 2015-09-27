@@ -4,12 +4,12 @@
  */
 
 interface ArgsMSG {
-    character: string;
-    message: string;
-    channel: string;
+  character: string;
+  message: string;
+  channel: string;
 }
 
 interface ArgsPRI {
-    character: string;
-    message: string;
+  character: string;
+  message: string;
 }

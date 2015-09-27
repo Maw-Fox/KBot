@@ -352,6 +352,8 @@ var KBot;
                 var command = arguments[0];
                 var output = '';
                 var params;
+                var param;
+                var paramType;
                 if (!command) {
                     output += "Commands: [" + KBot.CommandKeys.join(', ') + "]";
                     KBot._respond(this, output);
@@ -364,7 +366,9 @@ var KBot;
                 }
                 output += "[b]Syntax[/b]: !" + command + " ";
                 for (var i = 0, ii = params.length; i < ii; i++) {
-                    output += " " + params[i].name + "[" + KBot._typeToString(params[i].type) + (!params[i].required ? ':optional' : '') + "]";
+                    param = params[i];
+                    paramType = KBot._typeToString(param.type);
+                    output += " " + param.name + "[" + (paramType + (!param.required ? ':optional' : '')) + "]";
                 }
                 output += "\n[b]Description[/b]: [i]" + Commands[command].help + "[/i]";
                 KBot._respond(this, output);
