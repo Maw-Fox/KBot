@@ -36,14 +36,17 @@ module KBot {
 					return;
 				}
 
-				output += `Helpfile for: [b]${command}[/b]\nSyntax: ` +
-					`!${command} `;
+				output += `[b]Syntax[/b]: !${command} `;
 
 				for (let i = 0, ii = params.length; i < ii; i++) {
 					output += ` ${params[i].name}[${
 							_typeToString(params[i].type)
 						}${(!params[i].required ? ':optional' : '')}]`;
 				}
+
+				output += `\n[b]Description[/b]: [i]${
+						Commands[command].help
+					}[/i]`;
 
 				_respond(this, output);
 			}

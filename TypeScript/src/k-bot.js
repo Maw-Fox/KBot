@@ -362,11 +362,11 @@ var KBot;
                     KBot._respond(this, 'This command does not exist.');
                     return;
                 }
-                output += ("Helpfile for: [b]" + command + "[/b]\nSyntax: ") +
-                    ("!" + command + " ");
+                output += "[b]Syntax[/b]: !" + command + " ";
                 for (var i = 0, ii = params.length; i < ii; i++) {
                     output += " " + params[i].name + "[" + KBot._typeToString(params[i].type) + (!params[i].required ? ':optional' : '') + "]";
                 }
+                output += "\n[b]Description[/b]: [i]" + Commands[command].help + "[/i]";
                 KBot._respond(this, output);
             }
         };
