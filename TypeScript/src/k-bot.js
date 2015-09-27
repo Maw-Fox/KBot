@@ -59,6 +59,7 @@ FList.Chat.commands.PRI = function PRI(args) {
     }
     if (!tabObject) {
         Local.openPrivateChat(characterSafe);
+        tabObject = Local.TabBar.getTabFromId('user', character);
     }
     tabObject.tab
         .children('.tpn')
@@ -225,7 +226,7 @@ var KBot;
                 }
             }
             if (parameter.constructor !== command.arguments[i].type) {
-                _respond(this, "Argument [b]" + (i + 1) + "[/b] is not of type [b]" + command.arguments[i].type.toSource().slice(9, command.arguments[i].type.toSource().indexOf('(')) + "[/b].");
+                _respond(this, "Argument [b]" + (i + 1) + "[/b] is not of type [b]" + _typeToString(command.arguments[i].type) + "[/b].");
                 return null;
             }
             if (command.arguments[i].type === Number) {
@@ -262,6 +263,15 @@ var KBot;
         }));
         return;
     }
+    function _typeToString(type) {
+        return type
+            .toSource()
+            .slice(9, type
+            .toSource()
+            .indexOf('('))
+            .toLowerCase();
+    }
+    KBot._typeToString = _typeToString;
     function _sanitizeOwnMessage(message) {
         return message.replace(/\</g, '&lt;')
             .replace(/\>/g, '&gt;');
@@ -337,7 +347,7 @@ var KBot;
                 }
             ],
             help: 'Gives you either a command listing or a command\'s' +
-                ' description and syntax',
+                ' description and syntax.',
             func: function (arguments) {
                 var command = arguments[0];
                 var output = '';
@@ -352,8 +362,10 @@ var KBot;
                     KBot._respond(this, 'This command does not exist.');
                     return;
                 }
-                output += "Helpfile for: [b]" + command + "[/b]\n";
+                output += ("Helpfile for: [b]" + command + "[/b]\nSyntax: ") +
+                    ("!" + command + " ");
                 for (var i = 0, ii = params.length; i < ii; i++) {
+                    output += " " + params[i].name + "[" + KBot._typeToString(params[i].type) + (!params[i].required ? ':optional' : '') + "]";
                 }
                 KBot._respond(this, output);
             }
@@ -366,7 +378,7 @@ var KBot;
                     required: true
                 }
             ],
-            help: 'Return sum of minutes for the specified number of days.',
+            help: 'Return the sum of minutes for the given number of days.',
             func: function (days) {
                 KBot._respond(this, days * 24 * 60 + '');
             }

@@ -49,7 +49,9 @@ module KBot {
 			}
 
 			if (parameter.constructor !== command.arguments[i].type) {
-				_respond(this, `Argument [b]${i + 1}[/b] is not of type [b]${command.arguments[i].type.toSource().slice(9, command.arguments[i].type.toSource().indexOf('(')) }[/b].`);
+				_respond(this, `Argument [b]${i + 1}[/b] is not of type [b]${
+						_typeToString(command.arguments[i].type)
+					}[/b].`);
 				return null;
 			}
 
@@ -93,6 +95,16 @@ module KBot {
 			})
 			}`);
 		return;
+	}
+
+	export function _typeToString(type: any): string {
+		return type
+			.toSource()
+			.slice(9, type
+				.toSource()
+				.indexOf('(')
+			)
+			.toLowerCase();
 	}
 
 	export function _sanitizeOwnMessage(message: string): string {

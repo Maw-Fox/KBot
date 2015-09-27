@@ -17,7 +17,7 @@ module KBot {
 				}
 			],
 			help: 'Gives you either a command listing or a command\'s' +
-				' description and syntax',
+				' description and syntax.',
 			func: function(arguments: string[]): void {
 				const command = arguments[0];
 				var output = '';
@@ -36,10 +36,13 @@ module KBot {
 					return;
 				}
 
-				output += `Helpfile for: [b]${command}[/b]\n`;
+				output += `Helpfile for: [b]${command}[/b]\nSyntax: ` +
+					`!${command} `;
 
 				for (let i = 0, ii = params.length; i < ii; i++) {
-
+					output += ` ${params[i].name}[${
+							_typeToString(params[i].type)
+						}${(!params[i].required ? ':optional' : '')}]`;
 				}
 
 				_respond(this, output);
@@ -54,7 +57,7 @@ module KBot {
 					required: true
 				}
 			],
-			help: 'Return sum of minutes for the specified number of days.',
+			help: 'Return the sum of minutes for the given number of days.',
 			func: function(days: number): void {
 				_respond(this, days * 24 * 60 + '');
 			}

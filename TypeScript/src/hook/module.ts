@@ -66,7 +66,9 @@ FList.Chat.commands.PRI = function PRI(args: ArgsPRI): void {
 
     if (!tabObject) {
         Local.openPrivateChat(characterSafe);
+        tabObject = Local.TabBar.getTabFromId('user', character);
     }
+
     tabObject.tab
         .children('.tpn')
         .removeClass('tpn-paused')
