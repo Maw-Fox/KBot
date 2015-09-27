@@ -4,8 +4,8 @@
  */
 
 interface HookArgs {
-	message: string;
-	channel: ChannelObject;
-	name: string;
-	type: string;
+    message: string;
+    channel: ChannelObject;
+    name: string;
+    type: string;
 }
