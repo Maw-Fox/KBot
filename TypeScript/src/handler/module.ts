@@ -18,11 +18,6 @@ module KBot {
 	export const responseQueue: Array<() => void> = [];
 	export const tick = setInterval(onTick, 750);
 
-	export function _sanitizeOwnMessage(message: string): string {
-		return message.replace(/\</g, '&lt;')
-			.replace(/\>/g, '&gt;');
-	}
-
 	function onTick(): void {
 		if (responseQueue.length) {
 			responseQueue.shift()();
@@ -98,6 +93,11 @@ module KBot {
 			})
 			}`);
 		return;
+	}
+
+	export function _sanitizeOwnMessage(message: string): string {
+		return message.replace(/\</g, '&lt;')
+			.replace(/\>/g, '&gt;');
 	}
 
 	export function _respond(tab: ChannelObject, message: string, override?: boolean): void {

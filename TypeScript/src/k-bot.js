@@ -200,11 +200,6 @@ var KBot;
 (function (KBot) {
     KBot.responseQueue = [];
     KBot.tick = setInterval(onTick, 750);
-    function _sanitizeOwnMessage(message) {
-        return message.replace(/\</g, '&lt;')
-            .replace(/\>/g, '&gt;');
-    }
-    KBot._sanitizeOwnMessage = _sanitizeOwnMessage;
     function onTick() {
         if (KBot.responseQueue.length) {
             KBot.responseQueue.shift()();
@@ -267,6 +262,11 @@ var KBot;
         }));
         return;
     }
+    function _sanitizeOwnMessage(message) {
+        return message.replace(/\</g, '&lt;')
+            .replace(/\>/g, '&gt;');
+    }
+    KBot._sanitizeOwnMessage = _sanitizeOwnMessage;
     function _respond(tab, message, override) {
         var responseFunction;
         var overrideFunction;
