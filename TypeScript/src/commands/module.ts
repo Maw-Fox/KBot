@@ -24,7 +24,7 @@ module KBot {
 				var params: CommandArgument[];
 
 				if (!command) {
-					output += `Commands: [${CommandKeys.join(', !')}]`;
+					output += `Commands: [${CommandKeys.join(', ')}]`;
 					_respond(this, output);
 					return;
 				}

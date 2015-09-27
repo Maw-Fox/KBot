@@ -353,7 +353,7 @@ var KBot;
                 var output = '';
                 var params;
                 if (!command) {
-                    output += "Commands: [" + KBot.CommandKeys.join(', !') + "]";
+                    output += "Commands: [" + KBot.CommandKeys.join(', ') + "]";
                     KBot._respond(this, output);
                     return;
                 }
