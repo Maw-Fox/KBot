@@ -26,72 +26,80 @@ module KBot {
     return;
   }
 
-  function parseArguments(command: Command, parameters: any[]): any[] {
-    for (let i = 0, ii = command.arguments.length; i < ii; i++) {
-      let parameter = parameters[i];
+  function parseArguments(data: ParseArgumentsOptions): any[] {
+    for (let i = 0, ii = data.command.arguments.length; i < ii; i++) {
+      let parameter = data.parameters[i];
 
-      if (parameter === null && !command.arguments[i].required) {
+      if (parameter === null && !data.command.arguments[i].required) {
         continue;
       }
 
-      if (!parameter && command.arguments[i].required) {
-        _respond(this, `Missing mandatory argument #${i + 1}.`);
+      if (!parameter && data.command.arguments[i].required) {
+        _respond(data.channel, `Missing mandatory argument #${i + 1}.`);
         return null;
       }
 
-      if (command.arguments[i].type === Number) {
+      if (data.command.arguments[i].type === Number) {
         parameter = parseFloat(parameter);
 
         if (!parameter) {
-          _respond(this, `Argument [b]${i + 1}[/b] is not a valid number.`);
+          _respond(
+            data.channel, 
+            `Argument [b]${i + 1}[/b] is not a valid number.`
+          );
           return null;
         }
       }
 
-      if (parameter.constructor !== command.arguments[i].type) {
-        _respond(this, `Argument [b]${i + 1}[/b] is not of type [b]${
-            _typeToString(command.arguments[i].type)
-          }[/b].`);
+      if (parameter.constructor !== data.command.arguments[i].type) {
+        _respond(
+          data.channel,
+          `Argument [b]${i + 1}[/b] is not of type [b]${
+            _typeToString(data.command.arguments[i].type)
+          }[/b].`
+        );
         return null;
       }
 
-      if (command.arguments[i].type === Number) {
-        parameters[i] = parseFloat(parameter);
+      if (data.command.arguments[i].type === Number) {
+        data.parameters[i] = parseFloat(parameter);
       }
     }
 
-    return parameters;
+    return data.parameters;
   }
 
-  function respondUser(tab: ChannelObject, message: string): void {
+  function respondUser(): void {
     FList.Chat.printMessage({
-      msg: _sanitizeOwnMessage(message),
-      to: tab,
+      msg: _sanitizeOwnMessage(this.message),
+      to: this.channel,
       from: FList.Chat.identity,
       type: 'chat',
       log: true
     });
+
     FList.Connection.send(`PRI ${
       JSON.stringify({
-        message: message,
-        recipient: tab.id
+        message: this.message,
+        recipient: this.channel.id
       })
       }`);
     return;
   }
 
-  function respondChannel(tab: ChannelObject, message: string): void {
+  function respondChannel(): void {
     FList.Chat.printMessage({
-      msg: _sanitizeOwnMessage(message),
-      to: tab,
+      msg: _sanitizeOwnMessage(this.message),
+      to: this.channel,
       from: FList.Chat.identity,
       type: 'chat',
       log: true
     });
+
     FList.Connection.send(`MSG ${
       JSON.stringify({
-        message: message,
-        channel: tab.id
+        message: this.message,
+        channel: this.channel.id
       })
       }`);
     return;
@@ -131,8 +139,21 @@ module KBot {
       message += ' [SENT TO PRIVATE]';
     }
 
-    responseQueue.push(responseFunction.bind(this, tab, message));
+    responseQueue.push(responseFunction.bind({
+      channel: tab,
+      message: message
+    }));
     return;
+  }
+
+  export function _getDisplayName(name: string): string {
+    const key = Commands.nickname.nicknamesKey.indexOf(name);
+
+    if (key === -1) {
+      return name;
+    }
+
+    return Commands.nickname.nicknames[key];
   }
 
   export function read(data: HookArgs): void {
@@ -156,12 +177,29 @@ module KBot {
         .split(' ');
     }
 
-    parameters = parseArguments.call(data.channel, command, parameters);
+    if (command.arguments) {
+      parameters = parseArguments({
+        command: command,
+        channel: data.channel,
+        parameters: parameters
+      });
+    }
 
     if (!parameters) {
       return;
     }
 
-    command.func.call(data.channel, parameters);
+    try {
+      command.func.call({
+        channel: data.channel,
+        user: data.name
+      }, parameters);
+    } catch (error) {
+      _respond(data.channel,
+        `Whoops! Something bad happened: [b]${error.message}[/b]: [i]${
+          error.stack
+        }[/i]`
+      );
+    }
   }
 }

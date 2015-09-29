@@ -325,7 +325,7 @@ window.KBot = (function() {
           }));
         }
         return Con.send("PRI " + JSON.stringify({
-          "recipient": msgObj.from.id,
+          "recipient": msgObj.to.id,
           "message": "[b]KBot[/b]: " + (Chat.desanitize(retMsg + ''))
         }));
       }), 1000);
@@ -343,7 +343,7 @@ window.KBot = (function() {
       }));
     }
     return FList.Connection.send("PRI " + JSON.stringify({
-      "recipient": msgObj.from.id,
+      "recipient": msgObj.to.id,
       "message": "[b]KBot[/b]: " + retMsg
     }));
   };

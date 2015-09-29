@@ -9,3 +9,9 @@ interface HookArgs {
   name: string;
   type: string;
 }
+
+interface ParseArgumentsOptions {
+  channel: ChannelObject;
+  command: Command;
+  parameters: any[];
+}
