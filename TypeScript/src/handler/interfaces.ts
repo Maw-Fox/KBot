@@ -3,15 +3,15 @@
  * @author Kali@F-List.net
  */
 
-interface HookArgs {
+interface IHookArgs {
   message: string;
   channel: ChannelObject;
   name: string;
   type: string;
 }
 
-interface ParseArgumentsOptions {
+interface IParseArgumentsOptions {
   channel: ChannelObject;
-  command: Command;
+  command: ICommand;
   parameters: any[];
 }

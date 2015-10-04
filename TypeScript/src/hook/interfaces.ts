@@ -3,13 +3,13 @@
  * @author Kali@F-List.net
  */
 
-interface ArgsMSG {
+interface IArgsMSG {
   character: string;
   message: string;
   channel: string;
 }
 
-interface ArgsPRI {
+interface IArgsPRI {
   character: string;
   message: string;
 }

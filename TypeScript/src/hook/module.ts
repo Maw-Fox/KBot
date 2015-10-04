@@ -7,7 +7,7 @@
 /// <reference path="interfaces.ts" />
 import Local = FList.Chat;
 
-FList.Chat.commands.MSG = function MSG(args: ArgsMSG): void {
+FList.Chat.commands.MSG = function MSG(args: IArgsMSG): void {
   var character = args.character;
   var message = args.message;
   var type = "chat";
@@ -43,7 +43,7 @@ FList.Chat.commands.MSG = function MSG(args: ArgsMSG): void {
   return;
 };
 
-FList.Chat.commands.PRI = function PRI(args: ArgsPRI): void {
+FList.Chat.commands.PRI = function PRI(args: IArgsPRI): void {
   var character = args.character;
   var characterSafe = character.toLowerCase();
   var isIgnored = Local.ignoreList.indexOf(characterSafe) !== -1;

@@ -26,7 +26,7 @@ module KBot {
     return;
   }
 
-  function parseArguments(data: ParseArgumentsOptions): any[] {
+  function parseArguments(data: IParseArgumentsOptions): any[] {
     for (let i = 0, ii = data.command.arguments.length; i < ii; i++) {
       let parameter = data.parameters[i];
 
@@ -156,10 +156,10 @@ module KBot {
     return Commands.nickname.nicknames[key];
   }
 
-  export function read(data: HookArgs): void {
+  export function read(data: IHookArgs): void {
     const end = data.message.indexOf(' ') !== -1 ?
       data.message.indexOf(' ') : data.message.length;
-    var command: Command;
+    var command: ICommand;
     var parameters: any[];
     
     command = Commands[data.message.slice(1, end)];
