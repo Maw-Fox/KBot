@@ -5,6 +5,7 @@
 
 /// <reference path="../lib/fchat.d.ts" />
 /// <reference path="../lib/jquery.d.ts" />
+/// <reference path="dictionary/module.ts" />
 /// <reference path="interfaces.ts" />
 /// <reference path="classes.ts" />
 /// <reference path="hook/module.ts" />
